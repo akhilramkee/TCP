@@ -38,19 +38,22 @@ def numberOfHost(subnet):
     return 2**(final_subnet.count('0'))
 
 def FormatSubnetID(subnet_id,host_id):
+    print('SubnetID\tHostRange\tBroadCast')
     for i in range(0,subnet_id):
-        pass
-    
+        subnetid = host_id*i
+        lower_Host = host_id*i+1
+        upper_Host = host_id*(i+1)-2
+        BroadCast = host_id*(i+1)-1
+        print(subnetid,'\t\t',lower_Host,'-',upper_Host,'\t\t',BroadCast)
 
 def main():
-    print('Enter the IP:')
-    ipAddress = input_ip()
     print('Enter the SUBNET MASK:')
     subnet_mask = input_ip() 
     SubnetCount = numberOfSubnets(subnet_mask)
     print('Number of Subnets:',SubnetCount)
-    HostCount = numberOfSubnets(subnet_mask)
+    HostCount = numberOfHost(subnet_mask)
     print('Host/Subnet:',HostCount)
+    FormatSubnetID(SubnetCount,HostCount)
     
 if __name__=='__main__':
     main()
