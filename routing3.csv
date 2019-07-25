@@ -1,0 +1,6 @@
+dest,route,MTU
+A,A,150
+B,B,150
+D,D,60
+E,F,70
+F,F,70
