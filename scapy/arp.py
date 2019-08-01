@@ -3,9 +3,6 @@ from sys import argv
 from scapy.all import *
 from scapy.layers.inet import Ether
 
-def printf(s,r):
-    r.sprintf("%Ether.src% %ARP.psrc%")
-
 def arp_ping(host):
     """ARP Ping"""
 
