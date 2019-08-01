@@ -1,4 +1,5 @@
 import pandas as pd
+import math
 
 def getSystemName(client):
         while(1):
@@ -22,7 +23,14 @@ def getMinMTU(sender,receiver,graph,router,routing_table):
         print(receiver);return minMTU
 
 def separateSegment(segmentSize,MTU):
-	power8 = 8**0;
+	power8 = 8**0
+	packet = {}
+	itr = 0
+	no_of_packets = math.ceil(segmentSize/MTU)
+	contentsize = segmentSize + (no_of_packet-1)*20
+	while(contentsize):
+		pc1 = {"id":itr,"header":20,"content":
+
 
 def main():
 	client = ['client1','client2','client3','client4']
