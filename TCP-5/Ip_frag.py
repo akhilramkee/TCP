@@ -1,5 +1,6 @@
 import pandas as pd
 import math
+import random
 
 def getSystemName(client):
         while(1):
@@ -22,17 +23,32 @@ def getMinMTU(sender,receiver,graph,router,routing_table):
                 print(currentHead,'->',end="")
         print(receiver);return minMTU
 
-def separateSegment(segmentSize,MTU):
-	power8 = 8**0
-	packet = {}
-	itr = 0
-	no_of_packets = math.ceil(segmentSize/MTU)
-	contentsize = segmentSize + (no_of_packet-1)*20
-	while(contentsize):
-		pc1 = {"id":itr,"header":20,"content":
+def separateSegment(id,segmentSize,MTU):
+	MTU = math.floor(MTU/8)*8
+	totalsize = segmentSize
+	currentAlloted = 0
+	packet = []
+	itr = id
+	while(segmentSize):
+		if(segmentSize<MTU):
+			contentsize = segmentSize
+			segmentSize = 0
+			offset = currentAlloted/8
+			currentAlloted +=segmentSize
+			frag_bit = 0
+		else:
+			contentsize = MTU
+			segmentSize-=MTU
+			offset = currentAlloted/8
+			currentAlloted+=MTU
+			frag_bit = 1
+		pc1 = {"identification":itr,"MDF":"00"+str(frag_bit),"offset":offset,"content":contentsize}
+		packet.append(pc1)
+	return packet
 
 
 def main():
+	segmentSize = 1
 	client = ['client1','client2','client3','client4']
 	router = ['A','B','C','D','E','F']
 	graph = { 'client1':['A'],
@@ -55,9 +71,12 @@ def main():
 	sender = getSystemName(client)
 	print("Enter receiver Name:")
 	receiver = getSystemName(client)
-	segmentSize = input("Enter Segmentation Size:")
 	minMTU = getMinMTU(sender,receiver,graph,router,routing_table)
 	print("\nMinimumMTU:",minMTU)
+	while(segmentSize != 0):
+		segmentSize = int(input("Enter Segment size:"))
+		Fragments = separateSegment(random.randint(1,2000),segmentSize,minMTU)
+		print(Fragments)
 
 if  __name__=='__main__':
 	main()

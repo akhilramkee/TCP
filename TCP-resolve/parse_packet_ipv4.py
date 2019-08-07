@@ -69,14 +69,21 @@ def parse_ipv4(packet):
 	packet_structure["Destination Ip"] = ip_parse(packet[16],packet[17],packet[18],packet[19])
 	return packet_structure
 
+def getARP(streamdata):
+	k = []
+	for i in range(28,len(streamdata),2):
+		k.append(streamdata[i:i+2])
+	return k
+
 def main():
-	f = open('bytestream','r')
+	f = open('arp','r')
 	streamdata = f.read()
 	if(streamdata[24:28] == '0800'):
 		packet = getipv4(streamdata)
 		print(parse_ipv4(packet))
-	else:
-		print("Ipv4 required")
+	elif(streamdata[24:28]=='0806'):
+		packet = getARP(streamdata)
+		print(packet)
 
 if __name__=='__main__':
 	main()
