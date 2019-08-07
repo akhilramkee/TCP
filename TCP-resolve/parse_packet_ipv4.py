@@ -48,7 +48,7 @@ def protocol(string):
 	return switcher.get(int(string),"Need to find")
 
 def checksum(string):
-	return format(int(string,16))
+	return "0x"+string
 
 def ip_parse(s1,s2,s3,s4):
 	return str(int(s1,16))+"."+str(int(s2,16))+"."+str(int(s3,16))+"."+str(int(s4,16))
